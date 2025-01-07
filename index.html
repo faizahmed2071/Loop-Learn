@@ -703,7 +703,6 @@ select, button, input {
         <div id="video-carousel">
             <h2>Memorize from Qari Ibrahim Idris</h2>
             <div class="carousel">
-                <!-- First Video -->
                 <div class="carousel-item" onclick="setVideoLink('https://youtu.be/SfZF3XvLtPM?si=DLdMbgJFjmMMEZH1', event)">
                     <iframe 
                         src="https://www.youtube.com/embed/SfZF3XvLtPM" 
@@ -711,7 +710,6 @@ select, button, input {
                         allowfullscreen>
                     </iframe>
                 </div>
-                <!-- Second Video -->
                 <div class="carousel-item" onclick="setVideoLink('https://youtu.be/q-U2H6F26_Q', event)">
                     <iframe 
                         src="https://www.youtube.com/embed/q-U2H6F26_Q" 
@@ -719,7 +717,6 @@ select, button, input {
                         allowfullscreen>
                     </iframe>
                 </div>
-                <!-- Third Video -->
                 <div class="carousel-item" onclick="setVideoLink('https://youtu.be/DeVB2YJOXbs', event)">
                     <iframe 
                         src="https://www.youtube.com/embed/DeVB2YJOXbs" 
@@ -727,7 +724,13 @@ select, button, input {
                         allowfullscreen>
                     </iframe>
                 </div>
-                <!-- Fourth Video -->
+                <div class="carousel-item" onclick="setVideoLink('https://youtu.be/0CME-y4Usik?si=7zIH8VvZAScy2QYg', event)">
+                    <iframe 
+                        src="https://www.youtube.com/embed/0CME-y4Usik?si=7zIH8VvZAScy2QYg" 
+                        frameborder="0" 
+                        allowfullscreen>
+                    </iframe>
+                </div>
                 <div class="carousel-item" onclick="setVideoLink('https://youtu.be/7fSS6VYvlmk', event)">
                     <iframe 
                         src="https://www.youtube.com/embed/7fSS6VYvlmk" 
@@ -1154,6 +1157,17 @@ async function fetchSpecificVerse() {
     }
 
     try {
+        // Fetch the total number of verses in the selected chapter
+        const chapterInfoResponse = await fetch(`https://api.quran.com/api/v4/chapters/${chapterNumber}`);
+        const chapterInfo = await chapterInfoResponse.json();
+        const totalVerses = chapterInfo.chapter.verses_count;
+
+        // Check if the entered verse number is valid
+        if (verseNumber > totalVerses || verseNumber < 1) {
+            errorMessage.textContent = `Invalid verse number. Surah ${chapterInfo.chapter.name_simple} consists of only ${totalVerses} verses.`;
+            return;
+        }
+
         // Fetch the specific verse in Indo-Pak script
         const verseResponse = await fetch(`https://api.quran.com/api/v4/quran/verses/indopak?chapter_number=${chapterNumber}&verse_key=${chapterNumber}:${verseNumber}`);
         const verseData = await verseResponse.json();
@@ -1177,11 +1191,6 @@ async function fetchSpecificVerse() {
           <p class="verse-text">${verse.text_indopak}<span class="verse-end-symbol"> (${arabicVerseNumber})</span></p>
           <p class="translation-text">${translation.text || 'Translation not available'}</p>
         `;
-
-        // Fetch the total number of verses in the chapter
-        const chapterInfoResponse = await fetch(`https://api.quran.com/api/v4/chapters/${chapterNumber}`);
-        const chapterInfo = await chapterInfoResponse.json();
-        const totalVerses = chapterInfo.chapter.verses_count;
 
         // Add navigation buttons
         const navigationButtons = document.createElement('div');
