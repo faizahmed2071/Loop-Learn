@@ -325,7 +325,7 @@ select, button, input {
 }
 
 .error {
-    color: red;
+    color: #eabc6f;
     font-weight: bold;
 }
 
@@ -475,6 +475,7 @@ select, button, input {
                 flex-direction: column;
                 align-items: center;
                 width: 100%;
+                justify-content: center;
             }
         }
         @media (max-width: 620px)
@@ -577,14 +578,8 @@ select, button, input {
     }
 }
 @media(max-width: 430px){
-    #videoUrl, #startTime, #endTime{
-        width: 70%;
-    }
-    .how-it-works-button{
-        right: -11%;
-    }
     .video-input{
-        width: 100%;
+        width: 95%;
     }
     .how-it-works-button{
         right: -9%;
@@ -628,6 +623,17 @@ select, button, input {
         text-align: center;
     }
     
+}
+@media(max-width: 320px){
+    .video-input{
+        width: 100%;
+    }
+    #videoUrl, #startTime, #endTime{
+        width: 70%;
+    }
+    .how-it-works-button{
+        right: -11%;
+    }
 }
     </style>
     <title>Loop And Learn | Ibi Idris</title>
@@ -693,12 +699,14 @@ select, button, input {
                         </tr>
                     </table>
                 </div>
-                <div id="player"></div>
+                <div id="player">
+                    <p id="fallbackMessage" style="display: block; color: #eabc6f; text-align: center;">
+                        Oops! Something went wrong. Please refresh the page to reload the video and try again."
+                    </p>
+                </div>
             </div>
         </div>
         <hr>
-
-        
         <!-- Carousel Section -->
         <div id="video-carousel">
             <h2>Memorize from Qari Ibrahim Idris</h2>
@@ -766,7 +774,6 @@ select, button, input {
                         allowfullscreen>
                     </iframe>
                 </div>
-                
             </div>
         </div>
         <hr>
@@ -895,7 +902,7 @@ select, button, input {
     <script>
         let player;
         let loopInterval;
-
+        
         function getYouTubeVideoId(url) {
             const match = url.match(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?/\s]{11})/);
             return match ? match[1] : null;
@@ -1216,6 +1223,7 @@ async function fetchSpecificVerse() {
         errorMessage.textContent = 'Error fetching the verse or translation. Please try again.';
     }
 }
+
 // Function to navigate between verses
 async function navigateVerse(direction, chapterNumber, currentVerseNumber) {
     const newVerseNumber = currentVerseNumber + direction;
