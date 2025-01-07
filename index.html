@@ -11,6 +11,11 @@
 
     <!--<link rel="stylesheet" href="style.css">-->
     <style>
+        @font-face {
+    font-family: 'SuraNames';
+    src: url('sura_names.woff2') format('woff2');
+}
+
         body{
             background-color: #0e2b43;
             color: white;
@@ -258,9 +263,11 @@
             padding: 10px;
         }
 
-        @font-face {
-    font-family: 'Amiri Quran';
-    src: url('https://cdn.jsdelivr.net/gh/alif-type/amiri@master/fonts/amiri-quran.ttf');
+    @font-face {
+    font-family: 'ProximaVara';
+    src: url('https://quran.com/fonts/lang/ProximaVara/ProximaVara.woff2') format('woff2');
+    font-weight: 100 900; /* Range of weights */
+    font-stretch: 75% 125%; /* Range of widths */
 }
 
 .verse-contents {
@@ -307,12 +314,11 @@ select, button, input {
     margin-bottom: 5px;
     color: white;
 }
-
 .verse-text {
     text-align: right;
     font-size: 40px;
     line-height: 2;
-    font-family: 'Amiri Quran', serif;
+    font-family: 'ProximaVara', sans-serif;
     color: white;
     direction: rtl;
     font-weight: 500;
@@ -712,7 +718,7 @@ select, button, input {
                 </div>
                 <div id="player">
                     <p id="fallbackMessage" style="display: block; color: #eabc6f; text-align: center;">
-                        Oops! Something went wrong. Please refresh the page to reload the video or open a new tab and try again."
+                        Oops! Something went wrong. Please refresh the page to reload the video and try again."
                     </p>
                 </div>
             </div>
